@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资产配置关注：三大叙事主导资产重估</title>
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --accent-color: #16213e;
+            --highlight-color: #0f3460;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --border-color: #e1e4e8;
+            --success-color: #2e7d32;
+            --warning-color: #ed6c02;
+            --info-color: #0288d1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .header .date {
+            font-size: 1.1em;
+            opacity: 0.9;
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .view-section {
+            margin-bottom: 50px;
+            padding: 35px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            border-left: 5px solid var(--highlight-color);
+        }
+
+        .view-section h2 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .view-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .view-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .view-item .label {
+            font-size: 0.85em;
+            color: var(--info-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .view-item .content-text {
+            font-size: 1em;
+            line-height: 1.7;
+        }
+
+        .view-item.trend .label { color: var(--success-color); }
+        .view-item.logic .label { color: var(--warning-color); }
+        .view-item.asset .label { color: var(--info-color); }
+
+        .sources {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .sources h4 {
+            font-size: 1em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .source-list {
+            list-style: none;
+        }
+
+        .source-item {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid var(--highlight-color);
+            font-size: 0.9em;
+            line-height: 1.6;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .source-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .source-item a {
+            color: var(--info-color);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .source-item a:hover {
+            text-decoration: underline;
+        }
+
+        .source-title {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .source-meta {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .ai-summary {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dotted var(--border-color);
+            color: #555;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+
+        .discussion-section, .action-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-radius: 12px;
+        }
+
+        .discussion-section h3, .action-section h3 {
+            font-size: 1.3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .discussion-section h3::before {
+            content: "💬";
+        }
+
+        .action-section h3::before {
+            content: "🎯";
+        }
+
+        .discussion-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .discussion-item h4 {
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-card {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .action-card .allocation {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .action-card .assets {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .action-card.overweight { border-top: 4px solid var(--success-color); }
+        .action-card.neutral { border-top: 4px solid var(--info-color); }
+        .action-card.underweight { border-top: 4px solid var(--warning-color); }
+
+        .signal-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .signal-list li {
+            padding: 12px 20px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--highlight-color);
+        }
+
+        .disclaimer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.85em;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9em;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--highlight-color);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header {
+                padding: 35px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .view-section {
+                padding: 25px 20px;
+            }
+
+            .view-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>宏观策略周报：三大叙事主导资产重估</h1>
+            <div class="date">📅 2026-03-08</div>
+        </header>
+
+        <main class="content">
+            <!-- 观点一 -->
+            <section class="view-section">
+                <h2>🔹 观点一：中东地缘冲突与能源重估</h2>
+
+                <div class="view-grid">
+                    <div class="view-item trend">
+                        <div class="label">大势研判</div>
+                        <div class="content-text">美伊冲突升级正在重构全球能源供应链，油价短期已计入大部分风险溢价，但霍尔木兹海峡通行若受实质影响，布伦特原油可能突破 95 美元/桶。</div>
+                    </div>
+
+                    <div class="view-item logic">
+                        <div class="label">核心逻辑</div>
+                        <div class="content-text">当前冲突的核心在于美国军事施压与外交谈判并行的双轨策略，未来 3-6 周是关键窗口。值得注意的是，全球原油供需基本面仍偏宽松，若冲突不扩散至海峡封锁，油价难以持续站在 90 美元上方。讽刺的是，美国已从原油进口国转为净出口国，地缘风险对美国的冲击远小于欧洲和亚洲。</div>
+                    </div>
+
+                    <div class="view-item asset">
+                        <div class="label">资产配置</div>
+                        <div class="content-text">短期做多油气股和能源 ETF，但需设置严格止损；中长期关注油服设备和战略石油储备概念。黄金因避险溢价已处高位，追涨风险大于机会。</div>
+                    </div>
+                </div>
+
+                <div class="sources">
+                    <h4>📚 参考来源</h4>
+                    <ul class="source-list">
+                        <li class="source-item">
+                            <div class="source-title">『德意志银行 | 美伊冲突未来几周的路线图』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-06</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/5bxBirQM8QTcY5evTb7aQg" target="_blank">https://mp.weixin.qq.com/s/5bxBirQM8QTcY5evTb7aQg</a></div>
+                            <div class="ai-summary">AI 大意：未来 3-6 周是关键窗口，油价短期已计价大部分风险，若冲突不扩散至霍尔木兹海峡，难以持续突破 90 美元。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『YY | 美伊冲突再起，本轮油价涨势如何？』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-05</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/0b4xsYayXupYrnm6KO-c3Q" target="_blank">https://mp.weixin.qq.com/s/0b4xsYayXupYrnm6KO-c3Q</a></div>
+                            <div class="ai-summary">AI 大意：油价上涨由地缘风险溢价驱动，但供需基本面偏宽松。若冲突不扩散至霍尔木兹海峡，油价难以持续突破 90 美元。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『伊朗局势是美国今年爆发金融危机的 trigger』</div>
+                            <div class="source-meta">政信三公子 ｜ 2026-03-08</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/NWjcOr8VX-11-LbQgQuM3g" target="_blank">https://mp.weixin.qq.com/s/NWjcOr8VX-11-LbQgQuM3g</a></div>
+                            <div class="ai-summary">AI 大意：中东冲突可能成为美国金融体系脆弱性的催化剂。高债务、高利率环境下，油价飙升可能加速美元信用收缩和资产价格重估。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『桥水谈近期伊朗局势对市场的直接影响』</div>
+                            <div class="source-meta">桥水中国 ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/_DTMLl8-HEkGe1nJptZH8A" target="_blank">https://mp.weixin.qq.com/s/_DTMLl8-HEkGe1nJptZH8A</a></div>
+                            <div class="ai-summary">AI 大意：伊朗地缘冲突升级推升原油和黄金避险溢价，但对全球经济基线影响有限。关键在于冲突是否会实质性影响霍尔木兹海峡通行。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『瑞银 | 中东局势对中国经济影响：风险上升但基线观点未变』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/PYzkU1dHajsRZHrQ9UMAFg" target="_blank">https://mp.weixin.qq.com/s/PYzkU1dHajsRZHrQ9UMAFg</a></div>
+                            <div class="ai-summary">AI 大意：油价上涨对中国 PPI 和输入性通胀有推动作用，但内需疲软下传导有限。基线情景下，中东冲突对中国经济增长影响可控。</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 观点二 -->
+            <section class="view-section">
+                <h2>🔹 观点二：AI 资本狂欢与法币信任危机</h2>
+
+                <div class="view-grid">
+                    <div class="view-item trend">
+                        <div class="label">大势研判</div>
+                        <div class="content-text">AI 资本开支持续高企支撑美股科技巨头估值，但达利欧警示这类似历史技术革命的泡沫阶段；黄金大涨的深层逻辑是市场对法币体系的不信任，而非单纯通胀交易。</div>
+                    </div>
+
+                    <div class="view-item logic">
+                        <div class="label">核心逻辑</div>
+                        <div class="content-text">AI 产业链的资本开支已呈现"自我吞噬"特征——科技巨头为争夺算力基础设施过度投资，盈利增速开始落后于资本扩张速度。传导链条为：AI 叙事→科技股估值溢价→资本开支持续高企→盈利验证压力→资产价格波动加剧。与此同时，黄金、白银和比特币的同步大涨反映了投资者对美元信用的深层担忧。</div>
+                    </div>
+
+                    <div class="view-item asset">
+                        <div class="label">资产配置</div>
+                        <div class="content-text">美股科技股短期仍有动能，但建议减仓纯概念炒作的 AI 标的，聚焦有真实盈利支撑的芯片和数据中心龙头。黄金等待回调后介入，长期看好去美元化主题下的贵金属和比特币。铜长期受益于电气化和 AI 数据中心建设，维持看涨。</div>
+                    </div>
+                </div>
+
+                <div class="sources">
+                    <h4>📚 参考来源</h4>
+                    <ul class="source-list">
+                        <li class="source-item">
+                            <div class="source-title">『AI 正在吞噬一切甚至自己！达利欧最新对话』</div>
+                            <div class="source-meta">聪明投资者 ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/Yzaw9aLo6DT1p6kw9PxawQ" target="_blank">https://mp.weixin.qq.com/s/Yzaw9aLo6DT1p6kw9PxawQ</a></div>
+                            <div class="ai-summary">AI 大意：达利欧：AI 资本开支热潮类似历史技术革命，但需警惕估值泡沫。黄金白银大涨反映对法币体系深层不信任，而非单纯通胀交易。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『美伊冲突、AI 叙事交易和两会前瞻』</div>
+                            <div class="source-meta">香帅的金融江湖 ｜ 2026-03-03</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/5Pr5Lpzge4dPR5Bru1ZIyA" target="_blank">https://mp.weixin.qq.com/s/5Pr5Lpzge4dPR5Bru1ZIyA</a></div>
+                            <div class="ai-summary">AI 大意：当前市场三大主线：中东地缘风险推升油价和避险资产；AI 资本开支持续高企但估值分化；中国两会政策预期聚焦财政扩张和结构性改革。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『【摩根大通】油气面临历史性重估，金铝共振迎结构性牛市』</div>
+                            <div class="source-meta">我们对 A 股的思考 ｜ 2026-03-03</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/QOgRE7O5AM4p1lhLEdaT-A" target="_blank">https://mp.weixin.qq.com/s/QOgRE7O5AM4p1lhLEdaT-A</a></div>
+                            <div class="ai-summary">AI 大意：地缘冲突和供给约束推动油气价格重估；黄金受益于去美元化和央行购金；铝受供给侧约束和新能源需求拉动，看好结构性机会。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『【大摩】中东地缘风暴重塑全球能源格局，金银狂飙凸显避险溢价，铜价长线看涨』</div>
+                            <div class="source-meta">我们对 A 股的思考 ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/tb2-PWSOB1-bkWscjr3CpQ" target="_blank">https://mp.weixin.qq.com/s/tb2-PWSOB1-bkWscjr3CpQ</a></div>
+                            <div class="ai-summary">AI 大意：中东局势升级可能重构全球能源供应链；金银大涨反映法币体系信任危机；铜长期受益于电气化和 AI 数据中心需求。</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 观点三 -->
+            <section class="view-section">
+                <h2>🔹 观点三：中国政策转向与增长目标重构</h2>
+
+                <div class="view-grid">
+                    <div class="view-item trend">
+                        <div class="label">大势研判</div>
+                        <div class="content-text">2026 年政府工作报告将 GDP 目标定于 4.5%-5.0% 区间，广义财政赤字率提升至 9.6%，反映政策层"调结构、防风险、促改革"的优先级高于增速。</div>
+                    </div>
+
+                    <div class="view-item logic">
+                        <div class="label">核心逻辑</div>
+                        <div class="content-text">财政政策更加积极但传导效率是关键约束。两会政策落地的核心矛盾在于：地方政府债务高企限制基建空间，房地产风险尚未出清制约信用扩张。传导链条为：财政扩张→基建和民生支出增加→PMI 持续扩张（2 月制造业 PMI 52.1）→但房地产和消费复苏仍弱→增长质量优于速度。值得注意的是，政策底已现，等待基本面和信心修复的共振点。</div>
+                    </div>
+
+                    <div class="view-item asset">
+                        <div class="label">资产配置</div>
+                        <div class="content-text">A 股和港股处于历史估值低位，相对看好高股息红利资产和受益于财政支出的基建链、设备更新概念。对依赖广谱消费修复的板块保持谨慎。利率债短期受益于宽松货币环境，但长期供给压力增大。</div>
+                    </div>
+                </div>
+
+                <div class="sources">
+                    <h4>📚 参考来源</h4>
+                    <ul class="source-list">
+                        <li class="source-item">
+                            <div class="source-title">『YY | 2026 政府工作报告解读：调结构、防风险、促改革』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-06</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/RErqCE8q--SylMw_OqVR9w" target="_blank">https://mp.weixin.qq.com/s/RErqCE8q--SylMw_OqVR9w</a></div>
+                            <div class="ai-summary">AI 大意：政府工作报告强调高质量发展，淡化增速目标。财政政策更加积极，重点支持科技自立自强和民生保障，风险防控仍是底线。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『野村 | 预计中国 GDP 增长目标调整为"4.5%-5.0%"，广义财政赤字率上升至 9.6%』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/quHSidh1V0ombNZDD_6amg" target="_blank">https://mp.weixin.qq.com/s/quHSidh1V0ombNZDD_6amg</a></div>
+                            <div class="ai-summary">AI 大意：2026 年中国增长目标更务实，财政扩张力度加大。广义赤字率提升反映政策层对稳增长的决心，但债务可持续性仍是约束。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『2 月 RatingDog 中国制造业 PMI 升至 52.1，扩张态势走阔』</div>
+                            <div class="source-meta">RatingDog ｜ 2026-03-04</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/mm4ii1r7pSGnk_ufQG2VpA" target="_blank">https://mp.weixin.qq.com/s/mm4ii1r7pSGnk_ufQG2VpA</a></div>
+                            <div class="ai-summary">AI 大意：2 月制造业 PMI 升至 52.1%，显示经济扩张态势持续。新订单指数和生产指数均改善，反映内需边际修复。</div>
+                        </li>
+                        <li class="source-item">
+                            <div class="source-title">『周末扯淡：对自己乐观一点』</div>
+                            <div class="source-meta">不跪的世界 ｜ 2026-03-08</div>
+                            <div class="source-meta"><a href="https://mp.weixin.qq.com/s/1bAu23bgr0kjYFBQyJGyAw" target="_blank">https://mp.weixin.qq.com/s/1bAu23bgr0kjYFBQyJGyAw</a></div>
+                            <div class="ai-summary">AI 大意：当前市场悲观情绪过度，中国资产估值处于历史低位。政策底已现，等待基本面和信心修复的共振点。</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 分歧讨论 -->
+            <section class="discussion-section">
+                <h3>分歧讨论</h3>
+                <div class="discussion-item">
+                    <h4>关于油价走势</h4>
+                    <p>多头观点认为地缘风险将持续推升油价，空头观点认为供需基本面偏宽松。<strong>判断优先级</strong>：短期（1-3 周）地缘风险主导，油价偏强；中期（1-3 月）供需回归，油价回落至 75-85 美元区间。</p>
+                </div>
+                <div class="discussion-item">
+                    <h4>关于 AI 产业链</h4>
+                    <p>共识是长期看好，分歧在于当前估值是否已过度透支。<strong>建议</strong>：以盈利验证为锚，减持纯概念股，聚焦有真实订单支撑的龙头。</p>
+                </div>
+            </section>
+
+            <!-- 行动信号 -->
+            <section class="action-section">
+                <h3>行动信号</h3>
+
+                <div class="action-grid">
+                    <div class="action-card overweight">
+                        <div class="allocation">超配 Overweight</div>
+                        <div class="assets">油气 · 黄金 · 铜</div>
+                    </div>
+                    <div class="action-card neutral">
+                        <div class="allocation">标配 Neutral</div>
+                        <div class="assets">美股科技龙头<br>中国高股息资产</div>
+                    </div>
+                    <div class="action-card underweight">
+                        <div class="allocation">低配 Underweight</div>
+                        <div class="assets">美债 · 广谱消费股</div>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 25px; color: var(--primary-color);">关键跟踪信号</h4>
+                <ul class="signal-list">
+                    <li><strong>霍尔木兹海峡通行状态</strong> — 决定油价方向</li>
+                    <li><strong>美国科技巨头 Q1 财报 AI 资本开支指引</strong> — 决定 AI 产业链估值</li>
+                    <li><strong>中国两会后财政政策落地节奏</strong> — 决定 A 股反弹高度</li>
+                </ul>
+            </section>
+
+            <div class="disclaimer">
+                <p>免责声明：本报告基于公开信息整理，不构成投资建议。市场有风险，投资需谨慎。</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>宏观策略周报 © 2026 | Generated by Macro Strategist</p>
+        </footer>
+    </div>
+</body>
+</html>
